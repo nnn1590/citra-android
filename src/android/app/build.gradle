@@ -10,6 +10,7 @@ def buildType
 def abiFilter = "arm64-v8a" //, "x86"
 
 android {
+    //ndkVersion "21.0.6113669"
     compileSdkVersion 29
 
     compileOptions {
@@ -49,12 +50,19 @@ android {
         buildType = variant.buildType.name // sets the current build type
     }
 
+    flavorDimensions "type"
+
+    productFlavors {
+        gplay { }
+        libre { }
+    }
+
     // Define build types, which are orthogonal to product flavors.
     buildTypes {
 
         // Signed by release key, allowing for upload to Play Store.
         release {
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
         }
 
         // builds a release build that doesn't need signing
@@ -120,5 +128,5 @@ dependencies {
     implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
 
-    implementation 'com.android.billingclient:billing:2.2.0'
+    gplayImplementation 'com.android.billingclient:billing:2.2.0'
 }

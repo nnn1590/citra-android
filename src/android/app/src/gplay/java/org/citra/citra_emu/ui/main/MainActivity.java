@@ -38,6 +38,9 @@ public final class MainActivity extends AppCompatActivity implements MainView {
 
     private MainPresenter mPresenter = new MainPresenter(this);
 
+    // Singleton to manage user billing state
+    private static BillingManager mBillingManager;
+
     private static MenuItem mPremiumButton;
 
     @Override
@@ -65,6 +68,9 @@ public final class MainActivity extends AppCompatActivity implements MainView {
             mPlatformGamesFragment = (PlatformGamesFragment) getSupportFragmentManager().getFragment(savedInstanceState, "mPlatformGamesFragment");
         }
         PicassoUtils.init();
+
+        // Setup billing manager, so we can globally query for Premium status
+        mBillingManager = new BillingManager(this);
 
         // Dismiss previous notifications (should not happen unless a crash occurred)
         EmulationActivity.tryDismissRunningNotification(this);
@@ -95,7 +101,7 @@ public final class MainActivity extends AppCompatActivity implements MainView {
         inflater.inflate(R.menu.menu_game_grid, menu);
         mPremiumButton = menu.findItem(R.id.button_premium);
 
-        if (isPremiumActive()) {
+        if (mBillingManager.isPremiumCached()) {
             // User had premium in a previous session, hide upsell option
             setPremiumButtonVisible(false);
         }
@@ -220,6 +226,15 @@ public final class MainActivity extends AppCompatActivity implements MainView {
      * @return true if Premium subscription is currently active
      */
     public static boolean isPremiumActive() {
-        return true;
+        return mBillingManager.isPremiumActive();
+    }
+
+    /**
+     * Invokes the billing flow for Premium
+     *
+     * @param callback Optional callback, called once, on completion of billing
+     */
+    public static void invokePremiumBilling(Runnable callback) {
+        mBillingManager.invokePremiumBilling(callback);
     }
 }

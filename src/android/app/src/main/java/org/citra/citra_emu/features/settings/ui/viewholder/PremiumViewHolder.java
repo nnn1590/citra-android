@@ -39,7 +39,7 @@ public final class PremiumViewHolder extends SettingViewHolder {
 
         // Invoke billing flow if Premium is not already active, then refresh the UI to indicate
         // the purchase has completed.
-        MainActivity.invokePremiumBilling(() -> updateText());
+        updateText();
     }
 
     /**

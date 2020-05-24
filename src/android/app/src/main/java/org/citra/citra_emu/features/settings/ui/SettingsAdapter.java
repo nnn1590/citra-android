@@ -178,9 +178,6 @@ public final class SettingsAdapter extends RecyclerView.Adapter<SettingViewHolde
             onSingleChoiceClick(item);
             return;
         }
-
-        // User needs Premium, invoke the billing flow
-        MainActivity.invokePremiumBilling(() -> onSingleChoiceClick(item));
     }
 
     public void onSingleChoiceClick(PremiumSingleChoiceSetting item, int position) {
@@ -191,9 +188,6 @@ public final class SettingsAdapter extends RecyclerView.Adapter<SettingViewHolde
             onSingleChoiceClick(item);
             return;
         }
-
-        // User needs Premium, invoke the billing flow
-        MainActivity.invokePremiumBilling(() -> onSingleChoiceClick(item));
     }
 
     public void onStringSingleChoiceClick(StringSingleChoiceSetting item) {
@@ -215,9 +209,6 @@ public final class SettingsAdapter extends RecyclerView.Adapter<SettingViewHolde
             onStringSingleChoiceClick(item);
             return;
         }
-
-        // User needs Premium, invoke the billing flow
-        MainActivity.invokePremiumBilling(() -> onStringSingleChoiceClick(item));
     }
 
     DialogInterface.OnClickListener defaultCancelListener = (dialog, which) -> closeDialog();
